@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function criarCardClickUp(data) {
         try {
-            const response = await fetch("https://SEU_USUARIO.vercel.app/api/criarCard", {
+            const response = await fetch("/api/criarCard", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
