@@ -25,39 +25,49 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Função para enviar arquivos para o Google Drive
-    async function uploadFilesToDrive(files) {
-        const url = 'URL_DA_API_GOOGLE_DRIVE'; // Substitua pela URL da API do Google Drive
-        const formData = new FormData();
-
-        formData.append('files', files);
-
+    async function criarCardClickUp(data) {
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData,
+            const response = await fetch("https://SEU_USUARIO.vercel.app/api/criarCard", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
             });
 
-            if (!response.ok) {
-                throw new Error('Erro ao enviar arquivo para o Google Drive.');
+            const result = await response.json();
+            if (response.ok) {
+                alert('Card criado com sucesso no ClickUp!');
+            } else {
+                alert(`Erro ao criar card: ${result.error}`);
             }
-
-            console.log('Arquivo enviado com sucesso para o Google Drive.');
         } catch (error) {
-            console.error('Erro ao enviar arquivo:', error);
+            console.error('Erro ao criar card:', error);
+            alert('Erro ao criar card no ClickUp.');
         }
     }
 
-    // Evento de clique no botão enviar
     const btnEnviar = document.querySelector('.btn-enviar');
     btnEnviar.addEventListener('click', function(event) {
         event.preventDefault();
 
-        const inputFiles = document.getElementById('arquivoInput').files;
-        if (inputFiles.length > 0) {
-            uploadFilesToDrive(inputFiles);
-        } else {
-            console.error('Nenhum arquivo selecionado.');
+        const solicitante = document.getElementById('inputSolicitante').value;
+        const descricao = document.getElementById('inputDescricao').value;
+        const caminho = document.getElementById('inputCaminho').value;
+
+        const niveisSelecionados = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.nextElementSibling.innerText);
+        
+        if (niveisSelecionados.length === 0) {
+            alert('Por favor, selecione um nível.');
+            return;
         }
+
+        const data = {
+            list_id: "YOUR_LIST_ID", // Substitua pelo ID da lista no ClickUp
+            card_name: `${solicitante} - ${niveisSelecionados.join(", ")}`,
+            card_description: `Descrição: ${descricao}\nCaminho: ${caminho}`
+        };
+
+        criarCardClickUp(data);
     });
 });
