@@ -31,13 +31,13 @@ module.exports = async (req = VercelRequest, res = VercelResponse) => {
       })
     });
 
+    const clickUpData = await clickUpResponse.json();
+
     if (!clickUpResponse.ok) {
-      const errorData = await clickUpResponse.json();
-      res.status(clickUpResponse.status).json({ error: errorData.err });
+      console.error('Erro ao criar card no ClickUp:', clickUpData);
+      res.status(clickUpResponse.status).json({ error: clickUpData.err });
       return;
     }
-
-    const clickUpData = await clickUpResponse.json();
 
     // Salvar dados no banco de dados da Vercel
     const dbResponse = await fetch(`https://vercel.com/lucasag1s-projects/criacaode-cards/stores/edge-config/ecfg_x4qkt6llqumkxcqjbi0larjaxezm/items`, {
@@ -53,16 +53,17 @@ module.exports = async (req = VercelRequest, res = VercelResponse) => {
       })
     });
 
+    const dbData = await dbResponse.json();
+
     if (!dbResponse.ok) {
-      const dbErrorData = await dbResponse.json();
-      res.status(dbResponse.status).json({ error: dbErrorData.error });
+      console.error('Erro ao salvar dados no banco de dados:', dbData);
+      res.status(dbResponse.status).json({ error: dbData.error });
       return;
     }
 
-    const dbData = await dbResponse.json();
-
     res.status(200).json({ clickUpData, dbData });
   } catch (error) {
+    console.error('Erro no servidor:', error);
     res.status(500).json({ error: 'Erro no servidor', details: error.message });
   }
 };
