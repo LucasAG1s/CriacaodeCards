@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function criarCardClickUp(data) {
+        console.log("Enviando dados para a API:", data);
         try {
             const response = await fetch("/api/criarCard", {
                 method: "POST",
@@ -58,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const niveisSelecionados = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.nextElementSibling.innerText);
         
+        console.log("Níveis selecionados:", niveisSelecionados);
+
         if (niveisSelecionados.length === 0) {
             alert('Por favor, selecione um nível.');
             return;
