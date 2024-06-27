@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const data = {
-            list_id: "YOUR_LIST_ID", // Substitua pelo ID da lista no ClickUp
+            list_id: "901301931428", // Substitua pelo ID da lista no ClickUp
             card_name: `${solicitante} - ${niveisSelecionados.join(", ")}`,
             card_description: `Descrição: ${descricao}\nCaminho: ${caminho}`
         };
