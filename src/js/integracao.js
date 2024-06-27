@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (response.ok) {
                 alert('Card criado com sucesso no ClickUp e dados salvos no banco de dados!');
             } else {
+                console.error('Erro ao criar card:', result);
                 alert(`Erro ao criar card: ${result.error}`);
             }
         } catch (error) {
