@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const result = await response.json();
             if (response.ok) {
+                console.log('Card criado com sucesso no ClickUp e dados salvos no banco de dados!', result);
                 alert('Card criado com sucesso no ClickUp e dados salvos no banco de dados!');
             } else {
                 console.error('Erro ao criar card:', result);
