@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const result = await response.json();
             if (response.ok) {
-                alert('Card criado com sucesso no ClickUp!');
+                alert('Card criado com sucesso no ClickUp e dados salvos no banco de dados!');
             } else {
                 alert(`Erro ao criar card: ${result.error}`);
             }
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const data = {
-            list_id: "901301931428", // Substitua pelo ID da lista no ClickUp
+            list_id: "901301931428", // ID da lista no ClickUp
             card_name: `${solicitante} - ${niveisSelecionados.join(", ")}`,
             card_description: `Descrição: ${descricao}\nCaminho: ${caminho}`
         };
